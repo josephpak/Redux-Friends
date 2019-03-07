@@ -1,30 +1,44 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
-import FriendsList from './components/FriendsList';
+import { connect } from "react-redux";
+
+import FriendsListView from './views/FriendsListView';
 import PrivateRoute from './components/PrivateRoute';
 
 import Login from './components/Login';
 import './App.css';
 
 class App extends Component {
+
+  clearLocalStorage = e => {
+      e.preventDefault();
+      localStorage.clear();
+      window.location.reload();
+  };
+
   render() {
     return (
       <Router>
         <div className="App">
-          <ul>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/friends-list">Friends</Link>
-            </li>
-          </ul>
+          <nav>
+            {this.props.loggingIn && <Link to="/login">Login</Link>}
+            <Link to="/friends-list">Friends</Link>
+            <a onClick={this.clearLocalStorage}>Logout</a>
+          </nav>
           <Route path="/login" component={Login} />
-          <PrivateRoute path="/friends-list" component={FriendsList}/>
+          <PrivateRoute path="/friends-list" component={FriendsListView}/>
         </div>
       </Router>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    loggingIn: state.loggingIn
+  }
+};
+
+export default connect(
+  mapStateToProps
+)(App);
