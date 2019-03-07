@@ -1,12 +1,34 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import { connect } from "react-redux";
+import styled from 'styled-components';
 
 import FriendsListView from './views/FriendsListView';
 import PrivateRoute from './components/PrivateRoute';
 
 import Login from './components/Login';
 import './App.css';
+
+const AppWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  margin: 0 50px;
+  align-items: center;
+  flex-direction: column;
+`
+
+const NavWrapper = styled.nav`
+  display: flex;
+  align-items: center;
+  padding: 20px 5%;
+  width: 100%;
+
+  a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #538ADC;
+  }
+`
 
 class App extends Component {
 
@@ -19,15 +41,17 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
-          <nav>
-            {this.props.loggingIn && <Link to="/login">Login</Link>}
-            <Link to="/friends-list">Friends</Link>
-            <a onClick={this.clearLocalStorage}>Logout</a>
-          </nav>
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="/friends-list" component={FriendsListView}/>
-        </div>
+        <AppWrapper>
+          <NavWrapper>
+            {this.props.loggingIn && <Link to="/login">[ login ]</Link>}
+            <Link to="/friends-list">[ friends ]</Link>
+            <a className="logout" onClick={this.clearLocalStorage}>[ logout ]</a>
+          </NavWrapper>
+          <div>
+            <Route path="/login" component={Login} />
+            <PrivateRoute path="/friends-list" component={FriendsListView}/>
+          </div>
+        </AppWrapper>
       </Router>
     );
   }
