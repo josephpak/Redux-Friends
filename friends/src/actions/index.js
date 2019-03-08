@@ -17,6 +17,8 @@ export const DELETING_START = 'DELETING_START';
 export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_FAILURE = 'DELETE_FAILURE';
 
+export const PREPOPULATE_FRIEND_FORM = 'PREPOPULATE_FRIEND_FORM';
+
 export const login = creds => dispatch => {
   dispatch({ type: LOGGING_IN });
   return axios
@@ -71,4 +73,11 @@ export const deleteFriend = (id) => dispatch => {
             console.log(err)
             dispatch({ type: DELETE_FAILURE, payload: "Couldn't delete" })
         })
+}
+
+export const prepopulateFriendForm = friend => {
+    return {
+        type: PREPOPULATE_FRIEND_FORM,
+        payload: friend
+    }
 }

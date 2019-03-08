@@ -32,7 +32,7 @@ class Login extends React.Component {
     return (
       <div>
         <form onSubmit={this.login}>
-          <Loader type="Ball-Triangle" color="blue" height="90" width="60" />  
+        {this.props.loggingIn && <Loader type="Ball-Triangle" color="blue" height="90" width="60" />}  
           <input
             type="text"
             name="username"
@@ -52,7 +52,13 @@ class Login extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    loggingIn: state.loggingIn
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { login }
 )(Login);

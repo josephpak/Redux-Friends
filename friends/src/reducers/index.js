@@ -15,10 +15,13 @@ import {
     DELETE_SUCCESS,
     DELETE_FAILURE,
 
+    PREPOPULATE_FRIEND_FORM,
+
 } from "../actions"
 
 const initialState = {
     friends: [],
+    activeFriend: '',
     loggingIn: false,
     fetchingFriends: false,
     updatingFriends: false,
@@ -91,13 +94,15 @@ const rootReducer = (state = initialState, action) => {
         case DELETING_START:
             return {
                 ...state,
-                fetchingFriends: true,
+                fetchingFriends: false,
+                deletingFriends: true,
                 error: null
             }    
         case DELETE_SUCCESS:
             return {
                 ...state,
                 fetchingFriends: false,
+                deletingFriends: false,
                 friends: action.payload,
                 error: null
             }
@@ -105,8 +110,16 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 fetchingFriends: false,
+                deletingFriends: false,
                 error: action.payload
-            }       
+            }
+            
+        case PREPOPULATE_FRIEND_FORM:
+            return {
+                ...state,
+                activeFriend: action.payload,
+                error: false
+            }    
 
         default:
             return state;

@@ -11,7 +11,7 @@ const FriendsList = props => {
   return (
     <FriendsListWrapper>
         {props.friends.map(friend=> {
-            return <FriendCard key={friend.id} friend={friend} />
+            return <FriendCard {...props} key={friend.id} friend={friend} />
         })}
     </FriendsListWrapper>
   )

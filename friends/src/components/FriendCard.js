@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { deleteFriend } from '../actions';
+import { deleteFriend, prepopulateFriendForm } from '../actions';
 
 const FriendCardWrapper = styled.div`
     height: 200px;
@@ -48,6 +48,12 @@ const FriendCard = props => {
       props.deleteFriend(id)
   }
 
+  const handlePrepopulate = (e, friend) => {
+    e.preventDefault();
+    props.prepopulateFriendForm(friend)
+    props.history.push("/friends-form");
+  }
+
   return (
     <FriendCardWrapper>
         <FriendCardContentWrapper>
@@ -57,7 +63,7 @@ const FriendCard = props => {
         </FriendCardContentWrapper>
         <FriendCardButtonWrapper>
             <button 
-            // onClick={e => props.populateForm(e, friend)}
+            onClick={e => handlePrepopulate(e, friend)}
             className="update"
             >Update</button>
             <button
@@ -72,5 +78,5 @@ const FriendCard = props => {
 
 export default connect(
     null,
-    { deleteFriend }
+    { deleteFriend, prepopulateFriendForm }
 )(FriendCard)

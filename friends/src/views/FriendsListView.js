@@ -18,7 +18,7 @@ class FriendsListView extends React.Component {
         }
         return (
             <div>
-                <FriendsList friends={this.props.friends} />
+                <FriendsList {...this.props} friends={this.props.friends} />
             </div>
         )
     }

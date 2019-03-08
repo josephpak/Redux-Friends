@@ -44,7 +44,7 @@ const FormRowWrapper = styled.div`
 
 class NewFriendForm extends React.Component {
     state = {
-        friend: {
+        friend: this.props.activeFriend || {
             name: '',
             age: '',
             email: ''
@@ -79,6 +79,11 @@ class NewFriendForm extends React.Component {
             alert("Please input a valid age!")
         } else if (!this.state.friend.email.includes('@')) {
             alert("Please enter a valid email address")
+        } else if (this.props.activeFriend) {
+            // this.props.updateFriend(e, this.state.friend)
+            this.setState({
+                friend: initialState
+            })   
         } else {
             this.props.addFriend(this.state.friend)
             this.setState({
@@ -90,7 +95,7 @@ class NewFriendForm extends React.Component {
     render() {
         return (
             <NewFriendFormWrapper onSubmit={this.handleSubmit}>
-                <h3>{`[ add new friend ]`}</h3>
+                <h3>{`[ ${this.props.activeFriend ? "update" : "add new"} friend ]`}</h3>
                 <FormRowWrapper>
                     <p>First Name</p>
                     <input           
@@ -121,13 +126,19 @@ class NewFriendForm extends React.Component {
                     onChange={this.handleFormChange}
                     ></input>
                 </FormRowWrapper>
-                <button>{`Add New Friend`}</button>
+                <button>{`${this.props.activeFriend ? "Update" : "Add New"} Friend`}</button>
             </NewFriendFormWrapper>
         )
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        activeFriend: state.activeFriend
+    }
+}
+
 export default connect(
-    null,
+    mapStateToProps,
     { addFriend }
 )(NewFriendForm);
