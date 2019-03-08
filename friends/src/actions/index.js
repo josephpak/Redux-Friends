@@ -9,6 +9,10 @@ export const FETCHING_START = 'FETCHING_START';
 export const FETCHING_SUCCESS = 'FETCHING_SUCCESS';
 export const FETCHING_FAILURE = 'FETCHING_FAILURE';
 
+export const ADDING_START = 'ADDING_START';
+export const ADD_SUCCESS = 'ADD_SUCCESS';
+export const ADD_FAILURE = 'ADD_FAILURE';
+
 export const login = creds => dispatch => {
   dispatch({ type: LOGGING_IN });
   return axios
@@ -34,5 +38,19 @@ export const getFriends = () => dispatch => {
         .catch(err => {
             console.log(err)
             dispatch({ type: FETCHING_FAILURE, payload: "Couldn't fetch" })
+        })
+}
+
+export const addFriend = (friend) => dispatch => {
+    dispatch({ type: ADDING_START })
+
+    axiosWithAuth()
+        .post('http://localhost:5000/api/friends', friend)
+        .then(res => {
+            dispatch({ type: ADD_SUCCESS, payload: res.data });
+        })
+        .catch(err => {
+            console.log(err)
+            dispatch({ type: ADD_FAILURE, payload: "Couldn't fetch" })
         })
 }

@@ -6,6 +6,11 @@ import {
     FETCHING_START,
     FETCHING_SUCCESS,
     FETCHING_FAILURE,
+
+    ADDING_START,
+    ADD_SUCCESS,
+    ADD_FAILURE
+
 } from "../actions"
 
 const initialState = {
@@ -57,7 +62,27 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 fetchingFriends: false,
                 error: action.payload
+            }
+            
+        case ADDING_START:
+            return {
+                ...state,
+                fetchingFriends: true,
+                error: null
             }    
+        case ADD_SUCCESS:
+            return {
+                ...state,
+                fetchingFriends: false,
+                friends: action.payload,
+                error: null
+            }
+        case ADD_FAILURE:    
+            return {
+                ...state,
+                fetchingFriends: false,
+                error: action.payload
+            }     
 
         default:
             return state;

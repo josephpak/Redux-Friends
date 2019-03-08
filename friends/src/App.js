@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import styled from 'styled-components';
 
 import FriendsListView from './views/FriendsListView';
+import NewFriendForm from './components/NewFriendForm';
 import PrivateRoute from './components/PrivateRoute';
 
 import Login from './components/Login';
@@ -27,6 +28,7 @@ const NavWrapper = styled.nav`
     margin: 0 10px;
     text-decoration: none;
     color: #538ADC;
+    cursor: pointer;
   }
 `
 
@@ -45,11 +47,13 @@ class App extends Component {
           <NavWrapper>
             {this.props.loggingIn && <Link to="/login">[ login ]</Link>}
             <Link to="/friends-list">[ friends ]</Link>
+            <Link to="/friends-form">[ add new friend ]</Link>
             <a className="logout" onClick={this.clearLocalStorage}>[ logout ]</a>
           </NavWrapper>
           <div>
             <Route path="/login" component={Login} />
             <PrivateRoute path="/friends-list" component={FriendsListView}/>
+            <PrivateRoute path="/friends-form" component={NewFriendForm}/>
           </div>
         </AppWrapper>
       </Router>
