@@ -9,7 +9,11 @@ import {
 
     ADDING_START,
     ADD_SUCCESS,
-    ADD_FAILURE
+    ADD_FAILURE,
+
+    DELETING_START,
+    DELETE_SUCCESS,
+    DELETE_FAILURE,
 
 } from "../actions"
 
@@ -82,7 +86,27 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 fetchingFriends: false,
                 error: action.payload
-            }     
+            }    
+            
+        case DELETING_START:
+            return {
+                ...state,
+                fetchingFriends: true,
+                error: null
+            }    
+        case DELETE_SUCCESS:
+            return {
+                ...state,
+                fetchingFriends: false,
+                friends: action.payload,
+                error: null
+            }
+        case DELETE_FAILURE:    
+            return {
+                ...state,
+                fetchingFriends: false,
+                error: action.payload
+            }       
 
         default:
             return state;

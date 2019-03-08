@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { deleteFriend } from '../actions';
 
 const FriendCardWrapper = styled.div`
     height: 200px;
@@ -38,7 +40,14 @@ const FriendCardButtonWrapper = styled.div`
     align-items: flex-start;
 `
 
-const FriendCard = ({ friend }) => {
+const FriendCard = props => {
+  const { friend } = props 
+
+  const handleDelete = (e, id) => {
+      e.preventDefault();
+      props.deleteFriend(id)
+  }
+
   return (
     <FriendCardWrapper>
         <FriendCardContentWrapper>
@@ -52,7 +61,7 @@ const FriendCard = ({ friend }) => {
             className="update"
             >Update</button>
             <button
-            // onClick={e => props.deleteFriend(e, friend.id)}
+            onClick={e => handleDelete(e, friend.id)}
             className="delete"
             >Delete</button>                
         </FriendCardButtonWrapper>
@@ -61,4 +70,7 @@ const FriendCard = ({ friend }) => {
   )
 }
 
-export default FriendCard
+export default connect(
+    null,
+    { deleteFriend }
+)(FriendCard)
